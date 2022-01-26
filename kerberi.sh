@@ -2,6 +2,7 @@
 
 OUT="kerberi.txt"
 LISTS="lists.txt"
+TMP="$OUT-tmp.txt"
 
 echo "clearing $OUT and $LISTS"
 rm $OUT
@@ -27,4 +28,13 @@ do
 	done
 done < $LISTS
 
-# recursively search for lists
+# deduplicate
+sort -u "$OUT" > "$TMP"
+mv "$TMP" "$OUT"
+
+# remove non-kerberoses
+awk '!/@/' < $OUT > $TMP
+mv "$TMP" "$OUT"
+
+echo "output written to $OUT"
+echo "$(wc -l < $OUT) kerberi found"
