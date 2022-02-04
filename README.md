@@ -1,4 +1,7 @@
 # kerberi
+
+NOTE: the scripts in this repo are quite powerful. Please use them responsibly. Don't send spam.
+
 Get all kerberi from lists, recursively searching. Uses blanche.
 
 To get a list of most undergrads at MIT, try
