@@ -82,7 +82,7 @@ def save_kerb_infos_to_csv(kerb_infos: List[Dict[str, str]], csv_file: str):
                     + ","
                     + i["year"]
                     + ","
-                    + i["department"]
+                    + i["department"].replace(",", "")
                     + "\n"
                 )
 
@@ -97,7 +97,7 @@ def get_additional_info_from_file_to_csv(
         kerbs = [line.strip() for line in f.readlines()]
 
     if os.path.isfile(csv_file):
-        kerb_df = pd.read_csv(csv_file)
+        kerb_df = pd.read_csv(csv_file, sep=",")
         done_kerbs = set(kerb_df["kerberos"])
         kerbs = [k for k in kerbs if k not in done_kerbs]
 
@@ -117,8 +117,6 @@ def get_additional_info_from_file_to_csv(
 def main(kerb_in: str, info_csv: str, not_found_file: str):
 
     get_additional_info_from_file_to_csv(kerb_in, info_csv, not_found_file)
-
-    # segmentize(info_csv)
 
 
 if __name__ == "__main__":
