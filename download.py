@@ -23,26 +23,26 @@ def get_additional_info(kerbs: List[str]) -> Tuple[List[Dict[str, str]], List[st
         r = requests.get(ADDTL_INFO_URL(kerb))
         # parse json
         data = json.loads(r.text)
-        if len(data["result"]) != 1:
+        if len(data["result"]) == 0:
             print("ERROR: " + kerb + " not found in LDAP")
             print(data)
             not_found.append(kerb)
             continue
-        data = data["result"][0]
-        try:
-            our_data = {
-                "kerberos": data["email_id"],
-                "first_name": data["givenname"],
-                "last_name": data["lastname"],
-                "year": data["student_year"],
-                "department": data["department"] if "department" in data else "",
-            }
-        except:
-            print("ERROR: " + kerb + " not found in LDAP")
-            print(data)
-            not_found.append(kerb)
-            continue
-        out.append(our_data)
+        for datap in data["result"]:
+            try:
+                our_data = {
+                    "kerberos": datap["email_id"],
+                    "first_name": datap["givenname"],
+                    "last_name": datap["lastname"],
+                    "year": datap["student_year"],
+                    "department": datap["department"] if "department" in datap else "",
+                }
+            except:
+                print("ERROR: " + kerb + " not found in LDAP")
+                print(datap)
+                not_found.append(kerb)
+                continue
+            out.append(our_data)
 
     return out, not_found
 
