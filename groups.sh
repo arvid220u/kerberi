@@ -2,7 +2,7 @@
 
 N="$1"
 BASE_F="../kerberi_stratified_"
-GROUP_N="e3b0c44298fc1c149afb_"
+GROUP_N="beba90804fa05b_"
 EXT_F=".txt"
 
 # iterate from 0 to N-1
